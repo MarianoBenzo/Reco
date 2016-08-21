@@ -1,53 +1,109 @@
+% Genero dos clases en R2
+
+% Caso clases con dos Gaussinas
 mu = [2,3];
 sigma = [1,1.5;1.5,3];
 rng default  % For reproducibility
 F1 = mvnpdf(mu, sigma);
-r = mvnrnd(mu,sigma,1000);
+r1 = mvnrnd(mu,sigma,1000);
 
-mu1 = [5,10];
+mu1 = [4,7];
 sigma1 = [2.5,1.0;1.0,2];
 rng default  % For reproducibility
 F2 = mvnpdf(mu1, sigma1);
-r1 = mvnrnd(mu1,sigma1,1000);
+r2 = mvnrnd(mu1,sigma1,1000);
 
+%  Figura1 : Grafico de las dos clases
 figure(1)
 hold on;
-plot(r(:,1),r(:,2),'b*')
-plot(r1(:,1),r1(:,2),'r*')
-hold off;
+plot(r1(:,1),r1(:,2),'b*')
+plot(r2(:,1),r2(:,2),'r*')
 
-x = -5:.5:10; %// x axis
-y = -5:.5:15; %// y axis
+indices_min = r1(1, :);
+indices_max = r1(1, :);
+for i=1:1000
+	indices_min_i = zeros(2);
+	indices_max_i = zeros(2);
+	for j=1:2
+		if (r1(i,j) <= r2(i,j))
+			indices_min_i(j) = r1(i,j);
+			indices_max_i(j) = r2(i,j);
+		else 
+			indices_min_i(j) = r2(i,j);
+			indices_max_i(j) = r1(i,j);
+		end
+		if (indices_min_i(j) < indices_min(j))
+			indices_min(j) = indices_min_i(j);
+		end
+		if (indices_max_i(j) > indices_max(j))
+			indices_max(j) = indices_max_i(j);
+		end
+	end
+end
 
-[X Y] = meshgrid(x,y); %// all combinations of x, y
-Z1 = mvnpdf([X(:) Y(:)],mu,sigma); %// compute Gaussian pdf
-Z1 = reshape(Z1,size(X)); %// put into same size as X, Y
-Z2 = mvnpdf([X(:) Y(:)],mu1,sigma1); %// compute Gaussian pdf
-Z2 = reshape(Z2,size(X)); %// put into same size as X, Y
-%// contour(X,Y,Z), axis equal  %// contour plot; set same scale for x and y...
-figure(2)
+x1 = floor(indices_min(1));
+x2 = ceil(indices_max(1));
+m_width = x2-x1;
+y1 = floor(indices_min(2));
+y2 = ceil(indices_max(2));
+m_height = y2 - y1;
+matrix = zeros([m_width m_height]);
+
+% Parametros ventana de parzen
+ventanas = [10, 4, 2, 1, 0.5];
+dim = 2;
+
+for k=1:length(ventanas)
+
+h = ventanas(k);
+
+%  Usando ventana hipercubica
+figure(k);
+title(['Particiones resultantes usando hipercubo de lado = ', num2str(h)]);
 hold on;
-surf(X,Y,Z1) %// ... or 3D plot
-surf(X,Y,Z2)
-hold off;
+plot(r1(:,1),r1(:,2),'b*')
+plot(r2(:,1),r2(:,2),'r*')
 
-x1 = -2
-x2 = 12
-width = x2-x1
-y1 = -4
-y2 = 16
-height = y2 - y1
-matrix = zeros([width height])
-N = 10000
-
-for i=0:width-1
-    for j=0:height-1
-        x_ij = [x1+i, y1+j]
-        if (parzenr2(x_ij, r, N) > parzenr2(x_ij, r1, N))
-            matrix[i,j] = 1
+for i=x1:x2
+    for j=y1:y2
+        x_ij = [i, j];
+        p1 = parzen_hipercubo(x_ij, r1, h, dim);
+        p2 = parzen_hipercubo(x_ij, r2, h, dim);
+        if ( p1 > p2 )
+        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
+        	set(p,'FaceAlpha',0.2);
+        	set(p,'LineStyle','none');
+        elseif ( p2 > p1 )
+        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
+        	set(p,'FaceAlpha',0.5);
+        	set(p,'LineStyle','none');
         end
     end
 end
+hold off;
 
+% Usando ventana circular
+figure(k+length(ventanas));
+title(['Particiones resultantes usando ventana circular de radio = ', num2str(h)]);
+hold on;
+plot(r1(:,1),r1(:,2),'b*')
+plot(r2(:,1),r2(:,2),'r*')
 
-
+for i=x1:x2
+    for j=y1:y2
+        x_ij = [i, j];
+        p1 = parzenr2_circulo(x_ij, r1, h);
+        p2 = parzenr2_circulo(x_ij, r2, h);
+        if ( p1 > p2 )
+        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
+        	set(p,'FaceAlpha',0.2);
+        	set(p,'LineStyle','none');
+        elseif ( p2 > p1 )
+        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
+        	set(p,'FaceAlpha',0.5);
+        	set(p,'LineStyle','none');
+        end
+    end
+end
+hold off;
+end

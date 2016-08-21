@@ -9,7 +9,7 @@ for j= 1:N
     h = h1 / sqrt (j)
     kn = 0
     for i=1:L
-    if abs((x-X(i))/h) <= 0.5, kn = kn+1; end
+      if abs(x-X(i))/h <= 0.5, kn = kn+1; end
     end
     p(j) = (kn/L)/h;
 end
