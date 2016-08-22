@@ -52,14 +52,71 @@ matrix = zeros([m_width m_height]);
 % Parametros ventana de parzen
 ventanas = [10, 4, 2, 1, 0.5];
 dim = 2;
+fig = 2;
 
 for k=1:length(ventanas)
 
-h = ventanas(k);
+    h = ventanas(k);
 
-%  Usando ventana hipercubica
-figure(k);
-title(['Particiones resultantes usando hipercubo de lado = ', num2str(h)]);
+    %  Usando ventana hipercubica
+    img = figure(fig);
+    fig = fig+1;
+    title(['Particiones resultantes usando hipercubo de lado = ', num2str(h)]);
+    hold on;
+    plot(r1(:,1),r1(:,2),'b*')
+    plot(r2(:,1),r2(:,2),'r*')
+
+    for i=x1:x2
+        for j=y1:y2
+            x_ij = [i, j];
+            p1 = parzen_hipercubo(x_ij, r1, h, dim);
+            p2 = parzen_hipercubo(x_ij, r2, h, dim);
+            if ( p1 > p2 )
+                p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
+                set(p,'FaceAlpha',0.1);
+                set(p,'LineStyle','none');
+            elseif ( p2 > p1 )
+                p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
+                set(p,'FaceAlpha',0.1);
+                set(p,'LineStyle','none');
+            end
+        end
+    end
+    hold off;
+    saveas(img, ['ej2_hipercubo_h', num2str(h), '.png']);
+
+    % Usando ventana circular
+    img = figure(fig);
+    fig = fig + 1;
+    title(['Particiones resultantes usando ventana circular de radio = ', num2str(h)]);
+    hold on;
+    plot(r1(:,1),r1(:,2),'b*')
+    plot(r2(:,1),r2(:,2),'r*')
+
+    for i=x1:x2
+        for j=y1:y2
+            x_ij = [i, j];
+            p1 = parzenr2_circulo(x_ij, r1, h);
+            p2 = parzenr2_circulo(x_ij, r2, h);
+            if ( p1 > p2 )
+                p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
+                set(p,'FaceAlpha',0.1);
+                set(p,'LineStyle','none');
+            elseif ( p2 > p1 )
+                p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
+                set(p,'FaceAlpha',0.1);
+                set(p,'LineStyle','none');
+            end
+        end
+    end
+    hold off;
+    saveas(img, ['ej2_circular_h', num2str(h), '.png']);
+
+end
+
+% Usando knn
+img = figure(fig);
+title('Particiones resultantes usando k vecinos más cercanos');
 hold on;
 plot(r1(:,1),r1(:,2),'b*')
 plot(r2(:,1),r2(:,2),'r*')
@@ -67,43 +124,19 @@ plot(r2(:,1),r2(:,2),'r*')
 for i=x1:x2
     for j=y1:y2
         x_ij = [i, j];
-        p1 = parzen_hipercubo(x_ij, r1, h, dim);
-        p2 = parzen_hipercubo(x_ij, r2, h, dim);
+        p1 = knn_2D(x_ij, r1);
+        p2 = knn_2D(x_ij, r2);
         if ( p1 > p2 )
-        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
-        	set(p,'FaceAlpha',0.2);
-        	set(p,'LineStyle','none');
+            p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
+            set(p,'FaceAlpha',0.1);
+            set(p,'LineStyle','none');
         elseif ( p2 > p1 )
-        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
-        	set(p,'FaceAlpha',0.5);
-        	set(p,'LineStyle','none');
+            p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
+            set(p,'FaceAlpha',0.1);
+            set(p,'LineStyle','none');
         end
     end
 end
 hold off;
+saveas(img, 'ej2_knvecinos.png');
 
-% Usando ventana circular
-figure(k+length(ventanas));
-title(['Particiones resultantes usando ventana circular de radio = ', num2str(h)]);
-hold on;
-plot(r1(:,1),r1(:,2),'b*')
-plot(r2(:,1),r2(:,2),'r*')
-
-for i=x1:x2
-    for j=y1:y2
-        x_ij = [i, j];
-        p1 = parzenr2_circulo(x_ij, r1, h);
-        p2 = parzenr2_circulo(x_ij, r2, h);
-        if ( p1 > p2 )
-        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'b');
-        	set(p,'FaceAlpha',0.2);
-        	set(p,'LineStyle','none');
-        elseif ( p2 > p1 )
-        	p = patch([i-0.5 i+0.5 i+0.5 i-0.5],[j-0.5 j-0.5 j+0.5 j+0.5],'r');
-        	set(p,'FaceAlpha',0.5);
-        	set(p,'LineStyle','none');
-        end
-    end
-end
-hold off;
-end

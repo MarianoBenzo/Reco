@@ -2,7 +2,6 @@ function p = parzen_hipercubo(x, X, h, d)
 % x = punto a evaluar
 % X = muestras
 % h = longitud del lado del (hiper)cubo
-% N = cantidad de iteraciones
 L = length(X);
 kn = 0;
 
