@@ -8,6 +8,24 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}TP3: M\IeC {\'e}todos no-param\IeC {\'e}tricos}{5}{section.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}TP4: Discriminante de Fisher}{6}{section.4}
+\contentsline {subsection}{\numberline {3.1}Esquema general}{5}{subsection.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}TP5: Expectation Maximization}{7}{section.5}
+\contentsline {subsection}{\numberline {3.2}Ventanas de Parzen}{5}{subsection.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.1}Pseudoc\IeC {\'o}digo: Ventanas de Parzen}{6}{subsubsection.3.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}$k_n$ vecinos m\IeC {\'a}s cercanos}{6}{subsection.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.3.1}Pseudoc\IeC {\'o}digo: $k_N$ vecinos m\IeC {\'a}s cercanos}{7}{subsubsection.3.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.4}Ejercicio 1}{7}{subsection.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.4.1}Resultados e Im\IeC {\'a}genes}{7}{subsubsection.3.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.5}Ejercicio 2}{8}{subsection.3.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.5.1}Resultados e Im\IeC {\'a}genes}{9}{subsubsection.3.5.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}TP4: Discriminante de Fisher}{10}{section.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}TP5: Expectation Maximization}{11}{section.5}

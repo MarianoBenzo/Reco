@@ -1,5 +1,14 @@
 \BOOKMARK [1][-]{section.1}{TP1}{}% 1
 \BOOKMARK [1][-]{section.2}{TP2}{}% 2
 \BOOKMARK [1][-]{section.3}{TP3: M\351todos no-param\351tricos}{}% 3
-\BOOKMARK [1][-]{section.4}{TP4: Discriminante de Fisher}{}% 4
-\BOOKMARK [1][-]{section.5}{TP5: Expectation Maximization}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Esquema general}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Ventanas de Parzen}{section.3}% 5
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Pseudoc\363digo: Ventanas de Parzen}{subsection.3.2}% 6
+\BOOKMARK [2][-]{subsection.3.3}{kn vecinos m\341s cercanos}{section.3}% 7
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Pseudoc\363digo: kN vecinos m\341s cercanos}{subsection.3.3}% 8
+\BOOKMARK [2][-]{subsection.3.4}{Ejercicio 1}{section.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Resultados e Im\341genes}{subsection.3.4}% 10
+\BOOKMARK [2][-]{subsection.3.5}{Ejercicio 2}{section.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Resultados e Im\341genes}{subsection.3.5}% 12
+\BOOKMARK [1][-]{section.4}{TP4: Discriminante de Fisher}{}% 13
+\BOOKMARK [1][-]{section.5}{TP5: Expectation Maximization}{}% 14
